@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "target": "es2017", // ✅ Modern brauzerlar uchun - es5'dan yaxshiroq va tezroq
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": false, // ✅ Faqat TypeScript fayllar uchun — agar .js ishlatilmasa
+    "skipLibCheck": true, // ✅ RAMni tejaydi, typed fayllarni tekshirmaydi
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "~/*": [
+        "./public/*"
+      ]
+    },
+    "incremental": false, // ⛔ RAM tejash uchun hozircha o‘chirib turing
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next", // ✅ .next papkani exclude qilish kompilyatsiyani tezlashtiradi
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/__tests__/**"
+  ]
+}
