@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Product } from '@/constants/mock-api';
+import { User } from '@/constants/mock-api';
 import { useAddUserMutation, useUpdateUserMutation } from '@/lib/api/usersApi';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -29,6 +29,9 @@ import * as z from 'zod';
 const formSchema = z.object({
   fullName: z.string().min(2, {
     message: "Ism kamida 2 ta belgidan iborat bo'lishi kerak."
+  }),
+  uniqueId: z.string().min(2, {
+    message: "Unique ID kamida 2 ta belgidan iborat bo'lishi kerak."
   }),
   phone: z
     .string()
@@ -50,7 +53,7 @@ export default function UserForm({
   initialData,
   pageTitle
 }: {
-  initialData: Product | null;
+  initialData: User | null;
   pageTitle: string;
 }) {
   const route = useRouter();
@@ -58,6 +61,7 @@ export default function UserForm({
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
   const defaultValues = {
     fullName: initialData?.fullName || '',
+    uniqueId: initialData?.uniqueId || '',
     phone: initialData?.phone || '',
     gender: (initialData?.gender as 'MALE' | 'FEMALE') || undefined,
     birthday: initialData?.birthday
@@ -116,6 +120,19 @@ export default function UserForm({
                     <FormLabel>Ism Familiya</FormLabel>
                     <FormControl>
                       <Input placeholder='Ism Familiya' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='uniqueId'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Unikal ID</FormLabel>
+                    <FormControl>
+                      <Input placeholder='Unikal ID' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

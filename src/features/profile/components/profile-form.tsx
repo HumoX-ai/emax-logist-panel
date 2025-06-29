@@ -39,11 +39,6 @@ const profileSchema = z.object({
     .min(1, 'Telefon kiritilishi shart')
     .regex(/^\+?[1-9]\d{1,14}$/, 'Yaroqli telefon kiriting'),
   about: z.string().min(1, "Profil ma'lumotlari kiritilishi shart").max(500),
-  photo: z
-    .string()
-    .url({ message: 'Yaroqli URL kiriting' })
-    .optional()
-    .or(z.literal('')),
   password: z
     .string()
     .min(6, 'Parol 8 belgidan kam bo‘lmasligi kerak')
@@ -86,7 +81,6 @@ export function ProfileForm() {
         fullName: data.fullName,
         phone: data.phone,
         about: data.about, // about is required in UserData interface
-        ...(data.photo ? { photo: data.photo } : {}),
         ...(data.password ? { password: data.password } : {})
       };
 
@@ -161,19 +155,6 @@ export function ProfileForm() {
                 )}
               />
               <FormField
-                name='photo'
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Rasm URL (ixtiyoriy)</FormLabel>
-                    <FormControl>
-                      <Input placeholder='https://...' {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
                 name='password'
                 control={form.control}
                 render={({ field }) => (
@@ -190,7 +171,7 @@ export function ProfileForm() {
                 name='about'
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className='md:col-span-2'>
                     <FormLabel>Profil haqida</FormLabel>
                     <FormControl>
                       <Textarea

@@ -27,7 +27,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { useDebounce } from '@/hooks/use-debounce';
 import { useGetOrdersQuery } from '@/lib/api/ordersApi';
 
-export function OrderSelect({ name, label }: { name: string; label: string }) {
+export function OrderSelect({ name, label }: { name: string; label?: string }) {
   const { control } = useFormContext();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');

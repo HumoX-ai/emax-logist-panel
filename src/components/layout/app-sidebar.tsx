@@ -2,11 +2,6 @@
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger
-} from '@/components/ui/collapsible';
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -19,23 +14,16 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  SidebarRail,
-  useSidebar
+  SidebarRail
 } from '@/components/ui/sidebar';
 import { navItems } from '@/constants/data';
 import {
   BadgeCheck,
   Bell,
-  ChevronRight,
   ChevronsUpDown,
   GalleryVerticalEnd,
   LogOut
@@ -45,6 +33,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { Icons } from '../icons';
+import { useGetUserInfoQuery } from '@/lib/api/profileApi';
+import { NavMain } from '../nav-main';
 
 export const company = {
   name: 'Emaxb',
@@ -54,8 +44,15 @@ export const company = {
 
 export default function AppSidebar() {
   const { data: session } = useSession();
+  const { data: userInfo } = useGetUserInfoQuery();
   const pathname = usePathname();
-  const { state, isMobile } = useSidebar();
+
+  // Helper function to get file URL from key
+  const getFileUrl = (key: string) => {
+    return `https://file.emaxb.uz/api/files?key=${encodeURIComponent(key)}`;
+  };
+
+  const user = userInfo?.data;
 
   return (
     <Sidebar collapsible='icon'>
@@ -71,64 +68,14 @@ export default function AppSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent className='overflow-x-hidden'>
-        <SidebarGroup>
-          <SidebarGroupLabel>Overview</SidebarGroupLabel>
-          <SidebarMenu>
-            {navItems.map((item) => {
-              const Icon = item.icon ? Icons[item.icon] : Icons.logo;
-              return item?.items && item?.items?.length > 0 ? (
-                <Collapsible
-                  key={item.title}
-                  asChild
-                  defaultOpen={item.isActive}
-                  className='group/collapsible'
-                >
-                  <SidebarMenuItem>
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuButton
-                        tooltip={item.title}
-                        isActive={pathname === item.url}
-                      >
-                        {item.icon && <Icon />}
-                        <span>{item.title}</span>
-                        <ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
-                      </SidebarMenuButton>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {item.items?.map((subItem) => (
-                          <SidebarMenuSubItem key={subItem.title}>
-                            <SidebarMenuSubButton
-                              asChild
-                              isActive={pathname === subItem.url}
-                            >
-                              <Link href={subItem.url}>
-                                <span>{subItem.title}</span>
-                              </Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        ))}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  </SidebarMenuItem>
-                </Collapsible>
-              ) : (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    tooltip={item.title}
-                    isActive={pathname === item.url}
-                  >
-                    <Link href={item.url}>
-                      <Icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              );
-            })}
-          </SidebarMenu>
-        </SidebarGroup>
+        <NavMain
+          items={navItems.map((item) => ({
+            title: item.title,
+            url: item.url,
+            icon: item.icon ? (Icons[item.icon] as any) : undefined,
+            isActive: pathname === item.url
+          }))}
+        />
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
@@ -141,19 +88,21 @@ export default function AppSidebar() {
                 >
                   <Avatar className='h-8 w-8 rounded-lg'>
                     <AvatarImage
-                      src={session?.user?.id || ''}
-                      alt={session?.user?.name || ''}
+                      src={user?.photo ? getFileUrl(user.photo) : ''}
+                      alt={user?.fullName || session?.user?.name || ''}
                     />
                     <AvatarFallback className='rounded-lg'>
-                      {session?.user?.name?.slice(0, 2)?.toUpperCase() || 'CN'}
+                      {user?.fullName?.slice(0, 2)?.toUpperCase() ||
+                        session?.user?.name?.slice(0, 2)?.toUpperCase() ||
+                        'CN'}
                     </AvatarFallback>
                   </Avatar>
                   <div className='grid flex-1 text-left text-sm leading-tight'>
                     <span className='truncate font-semibold'>
-                      {session?.user?.name || ''}
+                      {user?.fullName || session?.user?.name || ''}
                     </span>
                     <span className='truncate text-xs'>
-                      {session?.user?.email || ''}
+                      {user?.phone || session?.user?.email || ''}
                     </span>
                   </div>
                   <ChevronsUpDown className='ml-auto size-4' />
@@ -169,21 +118,21 @@ export default function AppSidebar() {
                   <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                     <Avatar className='h-8 w-8 rounded-lg'>
                       <AvatarImage
-                        src={session?.user?.id || ''}
-                        alt={session?.user?.name || ''}
+                        src={user?.photo ? getFileUrl(user.photo) : ''}
+                        alt={user?.fullName || session?.user?.name || ''}
                       />
                       <AvatarFallback className='rounded-lg'>
-                        {session?.user?.name?.slice(0, 2)?.toUpperCase() ||
+                        {user?.fullName?.slice(0, 2)?.toUpperCase() ||
+                          session?.user?.name?.slice(0, 2)?.toUpperCase() ||
                           'CN'}
                       </AvatarFallback>
                     </Avatar>
                     <div className='grid flex-1 text-left text-sm leading-tight'>
                       <span className='truncate font-semibold'>
-                        {session?.user?.name || ''}
+                        {user?.fullName || session?.user?.name || ''}
                       </span>
                       <span className='truncate text-xs'>
-                        {' '}
-                        {session?.user?.email || ''}
+                        {user?.phone || session?.user?.email || ''}
                       </span>
                     </div>
                   </div>
@@ -191,9 +140,11 @@ export default function AppSidebar() {
                 <DropdownMenuSeparator />
 
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <BadgeCheck />
-                    Profil
+                  <DropdownMenuItem asChild>
+                    <Link href='/dashboard/profile'>
+                      <BadgeCheck />
+                      Profil
+                    </Link>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem>

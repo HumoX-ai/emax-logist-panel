@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { FileUpload } from '@/components/ui/file-upload';
 
 import { Orders } from '@/constants/data';
 import UserSelect from '@/features/users/components/user-select';
@@ -270,9 +271,30 @@ export default function UserForm({
               <div className='text-muted-foreground text-sm font-medium'>
                 Shartnoma fayli
               </div>
-              <p className='text-foreground mt-1 text-base break-all'>
-                {initialData.contractFile}
-              </p>
+              <div className='mt-1 flex items-center space-x-2'>
+                <p className='text-foreground text-base break-all'>
+                  {initialData.contractFile
+                    ?.split('/')
+                    .pop()
+                    ?.replace(/^\d+-/, '') || 'N/A'}
+                </p>
+                {initialData.contractFile && (
+                  <Button
+                    type='button'
+                    variant='ghost'
+                    size='sm'
+                    onClick={() =>
+                      window.open(
+                        `https://file.emaxb.uz/api/files?key=${encodeURIComponent(initialData.contractFile)}`,
+                        '_blank'
+                      )
+                    }
+                    className='text-blue-600 hover:text-blue-700'
+                  >
+                    Ko'rish
+                  </Button>
+                )}
+              </div>
             </div>
 
             <div className='border-border border-t pt-3'>
@@ -351,10 +373,7 @@ export default function UserForm({
                     <FormItem>
                       <FormLabel>Foydalanuvchi</FormLabel>
                       <FormControl>
-                        <UserSelect
-                          name={field.name}
-                          label='Foydalanuvchini tanlang'
-                        />
+                        <UserSelect name={field.name} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -403,7 +422,14 @@ export default function UserForm({
                   <FormItem className={isNewOrder ? '' : 'md:col-span-2'}>
                     <FormLabel>Shartnoma fayli</FormLabel>
                     <FormControl>
-                      <Input placeholder='Fayl manzili yoki IDsi' {...field} />
+                      <FileUpload
+                        value={field.value}
+                        onChange={field.onChange}
+                        onRemove={() => field.onChange('')}
+                        accept='application/pdf,image/*,.doc,.docx'
+                        maxSize={10 * 1024 * 1024} // 10MB
+                        placeholder='Shartnoma faylini tanlang yoki sudrab qo&#39;ying'
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

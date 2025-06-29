@@ -4,6 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { CellAction } from './cell-action';
 import { Payment } from '@/lib/api/paymentApi';
 import { formatAmount } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 // import { CellAction } from './cell-action';
 
 export const columns: ColumnDef<Payment>[] = [
@@ -64,8 +65,35 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: 'document',
-    header: 'Shartnoma fayli',
-    enableSorting: true
+    header: 'Hujjat fayli',
+    cell: ({ row }) => {
+      const document = row.getValue('document') as string;
+      if (!document) return <div>N/A</div>;
+
+      const fileName =
+        document.split('/').pop()?.replace(/^\d+-/, '') || 'Fayl';
+
+      return (
+        <div className='flex items-center space-x-2'>
+          <span className='max-w-32 truncate text-sm'>{fileName}</span>
+          <Button
+            type='button'
+            variant='ghost'
+            size='sm'
+            onClick={() =>
+              window.open(
+                `https://file.emaxb.uz/api/files?key=${encodeURIComponent(document)}`,
+                '_blank'
+              )
+            }
+            className='h-auto p-1 text-blue-600 hover:text-blue-700'
+          >
+            Ko&apos;rish
+          </Button>
+        </div>
+      );
+    },
+    enableSorting: false
   },
   {
     accessorKey: 'createdAt',

@@ -1,6 +1,5 @@
 /* eslint-disable import/no-unresolved */
 'use client';
-// import { FileUploader } from '@/components/file-uploader';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -12,6 +11,7 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { FileUpload } from '@/components/ui/file-upload';
 
 import {
   Payment,
@@ -141,11 +141,32 @@ export default function UserForm({
 
             <div className='border-border border-t pt-6'>
               <div className='text-muted-foreground text-sm font-medium'>
-                Hujjat
+                Hujjat fayli
               </div>
-              <p className='text-foreground mt-1 text-base break-all'>
-                {initialData.document || 'N/A'}
-              </p>
+              <div className='mt-1 flex items-center space-x-2'>
+                <p className='text-foreground text-base break-all'>
+                  {initialData.document
+                    ?.split('/')
+                    .pop()
+                    ?.replace(/^\d+-/, '') || 'N/A'}
+                </p>
+                {initialData.document && (
+                  <Button
+                    type='button'
+                    variant='ghost'
+                    size='sm'
+                    onClick={() =>
+                      window.open(
+                        `https://file.emaxb.uz/api/files?key=${encodeURIComponent(initialData.document!)}`,
+                        '_blank'
+                      )
+                    }
+                    className='text-blue-600 hover:text-blue-700'
+                  >
+                    Ko&apos;rish
+                  </Button>
+                )}
+              </div>
             </div>
 
             <div className='border-border grid grid-cols-1 gap-x-6 gap-y-4 border-t pt-6 md:grid-cols-2'>
@@ -194,23 +215,7 @@ export default function UserForm({
                   <FormItem>
                     <FormLabel>Buyurtma raqami</FormLabel>
                     <FormControl>
-                      <OrderSelect
-                        name={field.name}
-                        label='Buyurtma raqamini tanlang'
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name='document'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Hujjat</FormLabel>
-                    <FormControl>
-                      <Input type='text' placeholder='Hujjat' {...field} />
+                      <OrderSelect name={field.name} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -224,6 +229,26 @@ export default function UserForm({
                     <FormLabel>Miqdori</FormLabel>
                     <FormControl>
                       <Input type='number' placeholder='Miqdor' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='document'
+                render={({ field }) => (
+                  <FormItem className='md:col-span-2'>
+                    <FormLabel>Hujjat fayli</FormLabel>
+                    <FormControl>
+                      <FileUpload
+                        value={field.value}
+                        onChange={field.onChange}
+                        onRemove={() => field.onChange('')}
+                        accept='application/pdf,image/*,.doc,.docx'
+                        maxSize={10 * 1024 * 1024} // 10MB
+                        placeholder='Hujjat faylini tanlang yoki sudrab qo&#39;ying'
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

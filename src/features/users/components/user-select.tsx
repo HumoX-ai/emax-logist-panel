@@ -28,7 +28,7 @@ import { useState } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { useDebounce } from '@/hooks/use-debounce';
 
-export function UserSelect({ name, label }: { name: string; label: string }) {
+export function UserSelect({ name, label }: { name: string; label?: string }) {
   const { control } = useFormContext();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');

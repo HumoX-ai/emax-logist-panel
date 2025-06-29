@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 'use client';
 import { useGetUserByIdQuery } from '@/lib/api/usersApi';
-import { Product } from '@/constants/mock-api';
+import { User } from '@/constants/mock-api';
 import UserForm from './user-form';
 import FormCardSkeleton from '@/components/form-card-skeleton';
 
@@ -15,7 +15,7 @@ export default function UserViewPage({ userId }: TProductViewPageProps) {
   let pageTitle = "Mijozni qo'shish";
 
   if (userId !== 'new') {
-    user = data as Product;
+    user = data as User;
     pageTitle = `Mijozni tahrirlash`;
   }
 

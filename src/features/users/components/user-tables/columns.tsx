@@ -27,6 +27,11 @@ export const columns: ColumnDef<Users>[] = [
     enableSorting: true
   },
   {
+    accessorKey: 'uniqueId',
+    header: 'Unikal ID',
+    enableSorting: true
+  },
+  {
     accessorKey: 'phone',
     header: 'Telefon raqami',
     enableSorting: true
