@@ -130,9 +130,9 @@ export default function UserForm({
                 name='uniqueId'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Unikal ID</FormLabel>
+                    <FormLabel>Mijoz ID</FormLabel>
                     <FormControl>
-                      <Input placeholder='Unikal ID' {...field} />
+                      <Input placeholder='Mijoz ID' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

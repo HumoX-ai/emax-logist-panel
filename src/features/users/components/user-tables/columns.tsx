@@ -22,15 +22,16 @@ export const columns: ColumnDef<Users>[] = [
   //   }
   // },
   {
+    accessorKey: 'uniqueId',
+    header: 'Mijoz ID',
+    enableSorting: true
+  },
+  {
     accessorKey: 'fullName',
     header: 'To‘liq ism',
     enableSorting: true
   },
-  {
-    accessorKey: 'uniqueId',
-    header: 'Unikal ID',
-    enableSorting: true
-  },
+
   {
     accessorKey: 'phone',
     header: 'Telefon raqami',

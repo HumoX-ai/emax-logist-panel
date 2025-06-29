@@ -82,7 +82,7 @@ export function BarGraph({ dateRange }: any) {
         <div className='flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6'>
           <CardTitle>Mijozlar grafikasi</CardTitle>
           <CardDescription>
-            Umumiy mijozlar soni: {totalClients}
+            Umumiy mijozlar soni: {totalClients} ta
           </CardDescription>
         </div>
       </CardHeader>

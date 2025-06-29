@@ -131,7 +131,7 @@ export default function OverViewLayout({
             <CardContent>
               <div className='text-2xl font-bold'>
                 {mainInfo ? (
-                  mainInfo.clientsCount
+                  mainInfo.clientsCount + " ta"
                 ) : (
                   <Skeleton className='h-7 w-10' />
                 )}
@@ -160,7 +160,7 @@ export default function OverViewLayout({
             <CardContent>
               <div className='text-2xl font-bold'>
                 {mainInfo ? (
-                  mainInfo.ordersCount
+                  mainInfo.ordersCount + " ta"
                 ) : (
                   <Skeleton className='h-7 w-10' />
                 )}
@@ -188,7 +188,7 @@ export default function OverViewLayout({
             <CardContent>
               <div className='text-2xl font-bold'>
                 {mainInfo ? (
-                  mainInfo.commentsCount
+                  mainInfo.commentsCount + " ta"
                 ) : (
                   <Skeleton className='h-7 w-10' />
                 )}
