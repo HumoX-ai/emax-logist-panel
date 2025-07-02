@@ -26,6 +26,7 @@ export type Orders = {
   price: number;
   description: string;
   contractFile: string;
+  photo?: string; // optional photo field
   status:
     | 'PENDING'
     | 'IN_WAREHOUSE'

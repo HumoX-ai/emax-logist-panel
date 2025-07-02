@@ -65,7 +65,8 @@ const formSchemaBase = z.object({
   ),
   contractFile: z.string().min(1, {
     message: 'Shartnoma faylini kiriting yoki tanlang.'
-  })
+  }),
+  photo: z.string().optional() // photo yuklash optional
 });
 
 // Schema for creating a new order (includes userId)
@@ -111,7 +112,8 @@ export default function UserForm({
         weight:
           initialData?.weight === 0 ? '0' : initialData?.weight || undefined,
         price: initialData?.price === 0 ? '0' : initialData?.price || undefined,
-        contractFile: initialData?.contractFile || ''
+        contractFile: initialData?.contractFile || '',
+        photo: initialData?.photo || ''
       };
       if (isNewOrder) {
         defaultValues.userId = initialData?.userId || '';
@@ -123,7 +125,8 @@ export default function UserForm({
         description: initialData.description,
         weight: initialData.weight,
         price: initialData.price,
-        contractFile: initialData.contractFile
+        contractFile: initialData.contractFile,
+        photo: initialData.photo || ''
       } as z.infer<typeof formSchemaEditOrder>);
     }
   }, [isEditing, initialData, form, isNewOrder, currentSchema]);
@@ -297,6 +300,36 @@ export default function UserForm({
               </div>
             </div>
 
+            {initialData.photo && (
+              <div className='border-border border-t pt-3'>
+                <div className='text-muted-foreground text-sm font-medium'>
+                  Rasm
+                </div>
+                <div className='mt-1 flex items-center space-x-2'>
+                  <p className='text-foreground text-base break-all'>
+                    {initialData.photo
+                      ?.split('/')
+                      .pop()
+                      ?.replace(/^\d+-/, '') || 'N/A'}
+                  </p>
+                  <Button
+                    type='button'
+                    variant='ghost'
+                    size='sm'
+                    onClick={() =>
+                      window.open(
+                        `https://file.emaxb.uz/api/files?key=${encodeURIComponent(initialData.photo!)}`,
+                        '_blank'
+                      )
+                    }
+                    className='text-blue-600 hover:text-blue-700'
+                  >
+                    Ko'rish
+                  </Button>
+                </div>
+              </div>
+            )}
+
             <div className='border-border border-t pt-3'>
               <div className='text-muted-foreground text-sm font-medium'>
                 Ta'rif
@@ -415,26 +448,52 @@ export default function UserForm({
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name='contractFile'
-                render={({ field }) => (
-                  <FormItem className={isNewOrder ? '' : 'md:col-span-2'}>
-                    <FormLabel>Shartnoma fayli</FormLabel>
-                    <FormControl>
-                      <FileUpload
-                        value={field.value}
-                        onChange={field.onChange}
-                        onRemove={() => field.onChange('')}
-                        accept='application/pdf,image/*,.doc,.docx'
-                        maxSize={10 * 1024 * 1024} // 10MB
-                        placeholder='Shartnoma faylini tanlang yoki sudrab qo&#39;ying'
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
+              <div className='w-full md:col-span-2'>
+                <FormField
+                  control={form.control}
+                  name='contractFile'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Shartnoma fayli</FormLabel>
+                      <FormControl>
+                        <FileUpload
+                          value={field.value}
+                          onChange={field.onChange}
+                          onRemove={() => field.onChange('')}
+                          accept='application/pdf,image/*,.doc,.docx'
+                          maxSize={10 * 1024 * 1024} // 10MB
+                          placeholder='Shartnoma faylini tanlang yoki sudrab qo&#39;ying'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className='w-full md:col-span-2'>
+                <FormField
+                  control={form.control}
+                  name='photo'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Rasm (ixtiyoriy)</FormLabel>
+                      <FormControl>
+                        <FileUpload
+                          value={field.value}
+                          onChange={field.onChange}
+                          onRemove={() => field.onChange('')}
+                          accept='image/*'
+                          maxSize={10 * 1024 * 1024} // 10MB
+                          placeholder='Rasmni tanlang yoki sudrab qo&#39;ying (ixtiyoriy)'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name='description'
