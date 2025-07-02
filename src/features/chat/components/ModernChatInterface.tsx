@@ -161,7 +161,7 @@ export default function ModernChatInterface() {
 
   // Auto scroll to bottom of messages
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
   }, [allMessages]);
 
   // Filter chats based on search
