@@ -285,7 +285,7 @@ export default function ModernChatInterface() {
                       </div>
                       <div className='flex items-center justify-between'>
                         <p className='text-muted-foreground truncate text-sm'>
-                          {chat.lastMessage || "Hali xabar yo'q"}
+                          {chat.lastMessage || ""}
                         </p>
                         <Badge variant='secondary' className='text-xs'>
                           #{chat.orderNumber}
