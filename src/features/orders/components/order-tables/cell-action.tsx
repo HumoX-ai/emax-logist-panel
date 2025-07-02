@@ -47,7 +47,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     { value: 'IN_PROCESS', label: 'Jarayonda' },
     { value: 'IN_BORDER', label: 'Chegarada' },
     { value: 'IN_CUSTOMS', label: 'Bojxonada' },
-    { value: 'DONE', label: 'Yakunlandi' }
+    { value: 'DONE', label: 'Tayyor' }
   ];
 
   const [selectedStatus, setSelectedStatus] = useState<Orders['status']>(

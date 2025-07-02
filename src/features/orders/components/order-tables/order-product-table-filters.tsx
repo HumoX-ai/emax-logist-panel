@@ -11,7 +11,7 @@ export const STATUS = [
   { value: 'IN_PROCESS', label: 'Jarayonda' },
   { value: 'IN_BORDER', label: 'Chegarada' },
   { value: 'IN_CUSTOMS', label: 'Bojxonada' },
-  { value: 'DONE', label: 'Bajarildi' }
+  { value: 'DONE', label: 'Tayyor' }
 ];
 
 export function useOrderTableFilters() {
