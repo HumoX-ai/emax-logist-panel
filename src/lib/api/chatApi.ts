@@ -84,26 +84,14 @@ export const chatApi = createApi({
         url: '/chats',
         params: { offset, limit }
       }),
-      providesTags: (result) => [
-        'Chats',
-        ...(result?.chats?.map(({ _id }) => ({
-          type: 'Chats' as const,
-          id: _id
-        })) ?? [])
-      ]
+      keepUnusedDataFor: 0
     }),
     getMessages: builder.query<MessagesResponse, GetMessagesQueryParams>({
       query: ({ orderId, offset = 0, limit = 10 }) => ({
         url: '/messages',
         params: { orderId, offset, limit }
       }),
-      providesTags: (result, error, { orderId }) => [
-        { type: 'Messages', id: orderId },
-        ...(result?.messages?.map(({ _id }) => ({
-          type: 'Messages' as const,
-          id: _id
-        })) ?? [])
-      ]
+      keepUnusedDataFor: 0
     }),
     sendMessage: builder.mutation<Message, SendMessageParams>({
       query: ({ chatId, text }) => ({

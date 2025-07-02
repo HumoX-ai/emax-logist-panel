@@ -76,10 +76,15 @@ export default function ModernChatInterface() {
     data: chatsData,
     isLoading: chatsLoading,
     refetch: refetchChats
-  } = useGetChatsQuery({
-    offset: chatsPage,
-    limit: CHATS_LIMIT
-  });
+  } = useGetChatsQuery(
+    {
+      offset: chatsPage,
+      limit: CHATS_LIMIT
+    },
+    {
+      refetchOnMountOrArgChange: true
+    }
+  );
 
   const {
     data: messagesData,
@@ -91,7 +96,10 @@ export default function ModernChatInterface() {
       offset: messagesPage,
       limit: MESSAGES_LIMIT
     },
-    { skip: !selectedChat }
+    {
+      skip: !selectedChat,
+      refetchOnMountOrArgChange: true
+    }
   );
 
   const [sendMessage, { isLoading: sendingMessage }] = useSendMessageMutation();
@@ -284,8 +292,8 @@ export default function ModernChatInterface() {
                         </span>
                       </div>
                       <div className='flex items-center justify-between'>
-                        <p className='text-muted-foreground truncate text-sm'>
-                          {chat.lastMessage || ""}
+                        <p className='text-muted-foreground max-w-[150px] truncate text-sm'>
+                          {chat.lastMessage || ''}
                         </p>
                         <Badge variant='secondary' className='text-xs'>
                           #{chat.orderNumber}
@@ -383,13 +391,11 @@ export default function ModernChatInterface() {
                         onClick={handleLoadMoreMessages}
                         disabled={messagesLoading}
                       >
-                        {messagesLoading ? (
+                        {messagesLoading && (
                           <>
                             <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                             Yuklanmoqda...
                           </>
-                        ) : (
-                          "Eski xabarlarni ko'rish"
                         )}
                       </Button>
                     )}
