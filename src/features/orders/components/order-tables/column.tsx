@@ -91,28 +91,38 @@ export const columns: ColumnDef<Orders>[] = [
           className={cn('rounded-full px-3 py-1 text-sm font-medium', {
             'border border-orange-300 bg-orange-100 text-orange-700':
               status === 'PENDING',
+            'border border-yellow-300 bg-yellow-100 text-yellow-700':
+              status === 'IN_WAREHOUSE',
             'border border-sky-300 bg-sky-100 text-sky-700':
               status === 'IN_PROCESS',
-            'border border-emerald-300 bg-emerald-100 text-emerald-700':
-              status === 'DONE',
             'border border-red-300 bg-red-100 text-red-700':
               status === 'IN_BORDER',
+            'border border-purple-300 bg-purple-100 text-purple-700':
+              status === 'IN_CUSTOMS',
+            'border border-emerald-300 bg-emerald-100 text-emerald-700':
+              status === 'DONE',
             'border border-gray-300 bg-gray-100 text-gray-700': ![
               'PENDING',
+              'IN_WAREHOUSE',
               'IN_PROCESS',
-              'DONE',
-              'IN_BORDER'
+              'IN_BORDER',
+              'IN_CUSTOMS',
+              'DONE'
             ].includes(status as string)
           })}
         >
           {status === 'PENDING' ? (
             <span className='text-orange-700'>Kutilmoqda</span>
+          ) : status === 'IN_WAREHOUSE' ? (
+            <span className='text-yellow-700'>Omborda</span>
           ) : status === 'IN_PROCESS' ? (
             <span className='text-sky-700'>Jarayonda</span>
-          ) : status === 'DONE' ? (
-            <span className='text-emerald-700'>Tugallangan</span>
           ) : status === 'IN_BORDER' ? (
             <span className='text-red-700'>Chegarada</span>
+          ) : status === 'IN_CUSTOMS' ? (
+            <span className='text-purple-700'>Bojxonada</span>
+          ) : status === 'DONE' ? (
+            <span className='text-emerald-700'>Tugallangan</span>
           ) : (
             <span className='text-gray-700'>Noma&#39;lum</span>
           )}

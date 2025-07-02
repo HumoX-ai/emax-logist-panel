@@ -1,12 +1,12 @@
 /* eslint-disable import/no-unresolved */
 'use client';
 
-import ChatInterface from '@/features/chat/chatInterface';
+import ModernChatInterface from '@/features/chat/components/ModernChatInterface';
 
-export default function Home() {
+export default function ChatPage() {
   return (
     <div className='bg-background h-screen w-full'>
-      <ChatInterface />
+      <ModernChatInterface />
     </div>
   );
 }

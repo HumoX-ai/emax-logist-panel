@@ -26,7 +26,13 @@ export type Orders = {
   price: number;
   description: string;
   contractFile: string;
-  status: 'PENDING' | 'IN_PROCESS' | 'IN_BORDER' | 'DONE';
+  status:
+    | 'PENDING'
+    | 'IN_WAREHOUSE'
+    | 'IN_PROCESS'
+    | 'IN_BORDER'
+    | 'IN_CUSTOMS'
+    | 'DONE';
   paymentStatus: string;
   createdAt: string;
   updatedAt: string;

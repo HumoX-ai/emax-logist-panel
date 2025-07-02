@@ -32,6 +32,16 @@ export function RecentSales({ dateRange }: any) {
     switch (status) {
       case 'PENDING':
         return 'Kutilmoqda';
+      case 'IN_WAREHOUSE':
+        return 'Omborda';
+      case 'IN_PROCESS':
+        return 'Jarayonda';
+      case 'IN_BORDER':
+        return 'Chegarada';
+      case 'IN_CUSTOMS':
+        return 'Bojxonada';
+      case 'DONE':
+        return 'Tugallangan';
       case 'COMPLETED':
         return 'Tugatilgan';
       case 'CANCELED':

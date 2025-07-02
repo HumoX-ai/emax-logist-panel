@@ -7,8 +7,10 @@ import { useCallback, useMemo } from 'react';
 
 export const STATUS = [
   { value: 'PENDING', label: 'Kutilmoqda' },
+  { value: 'IN_WAREHOUSE', label: 'Omborda' },
   { value: 'IN_PROCESS', label: 'Jarayonda' },
   { value: 'IN_BORDER', label: 'Chegarada' },
+  { value: 'IN_CUSTOMS', label: 'Bojxonada' },
   { value: 'DONE', label: 'Bajarildi' }
 ];
 

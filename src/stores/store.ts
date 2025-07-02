@@ -5,6 +5,7 @@ import { ordersApi } from '@/lib/api/ordersApi';
 import { paymentApi } from '@/lib/api/paymentApi';
 import { profileApi } from '@/lib/api/profileApi';
 import { userApi } from '@/lib/api/usersApi';
+import { chatApi } from '@/lib/api/chatApi';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const createStore = (preloadedState?: any) =>
@@ -15,7 +16,8 @@ export const createStore = (preloadedState?: any) =>
       [ordersApi.reducerPath]: ordersApi.reducer,
       [dashboardApi.reducerPath]: dashboardApi.reducer,
       [paymentApi.reducerPath]: paymentApi.reducer,
-      [commentsApi.reducerPath]: commentsApi.reducer
+      [commentsApi.reducerPath]: commentsApi.reducer,
+      [chatApi.reducerPath]: chatApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
@@ -24,7 +26,8 @@ export const createStore = (preloadedState?: any) =>
         ordersApi.middleware,
         dashboardApi.middleware,
         paymentApi.middleware,
-        commentsApi.middleware
+        commentsApi.middleware,
+        chatApi.middleware
       )
   });
 
