@@ -116,7 +116,7 @@ export const columns: ColumnDef<Orders>[] = [
           ) : status === 'IN_WAREHOUSE' ? (
             <span className='text-yellow-700'>Omborda</span>
           ) : status === 'IN_PROCESS' ? (
-            <span className='text-sky-700'>Jarayonda</span>
+            <span className='text-sky-700'>Tayyor&Yo&#39;lda</span>
           ) : status === 'IN_BORDER' ? (
             <span className='text-red-700'>Chegarada</span>
           ) : status === 'IN_CUSTOMS' ? (

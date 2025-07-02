@@ -35,7 +35,7 @@ export function RecentSales({ dateRange }: any) {
       case 'IN_WAREHOUSE':
         return 'Omborda';
       case 'IN_PROCESS':
-        return 'Jarayonda';
+        return "Tayyor&Yo'lda";
       case 'IN_BORDER':
         return 'Chegarada';
       case 'IN_CUSTOMS':
