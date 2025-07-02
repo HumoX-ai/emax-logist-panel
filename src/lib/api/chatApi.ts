@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { getAccessToken } from '@/app/helpers/index';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
